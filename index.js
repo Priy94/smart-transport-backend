@@ -19,8 +19,17 @@ app.listen("4000", function(){
 })
 
 app.post('/', function(req, res){
-    console.log('body is:',req.body)
-    res.send("hello, i am  home page")
+    const query = req.body.query;
+    axios.get(`${url}${query}${secondParamter}`)
+    .then(result => {
+        console.log(result)
+        var predictions = result.data.predictions.map(item => {
+            return(item.description)
+        });
+        console.log(predictions)
+        res.json({data:predictions})
+    })
+    
 })
 
 app.get('/login', function(request, response){
